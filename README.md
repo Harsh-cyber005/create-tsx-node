@@ -1,14 +1,18 @@
 # Create-TSX-Node
 
-`create-tsx-node` is a command-line tool that simplifies the setup of a TypeScript-ready Node.js project with Express. It automates the creation of the project structure, installs dependencies, and configures TypeScript with `tsc` and `nodemon` for an efficient development experience.
+`create-tsx-node` is a command-line tool that simplifies the setup of a TypeScript-ready Node.js project with Express. It automates the creation of the project structure, installs dependencies, and configures TypeScript with customizable options for an efficient development experience.
 
 ## Features
 
 - Creates a new Node.js and Express project with TypeScript support.
+- Prompts for user input to customize the project setup:
+  - Specify the port on which the server starts (default: `3000`).
+  - Choose the name of the source folder (default: `src`).
+  - Choose the name of the build/output folder (default: `build`).
+  - Decide whether to include live-reloading with `tsc --watch` and `nodemon` (default: included).
 - Sets up `src` and `build` directories for development and output files.
-- Includes `tsc --watch` for continuous TypeScript compilation.
-- Configures `nodemon` to monitor changes in the compiled output (`build/index.js`).
-- Allows running both `tsc --watch` and `nodemon` with a single `npm start` command.
+- Configures TypeScript (`tsc`) for strict type checking and compatibility with Node.js.
+- Optionally includes `nodemon` and `concurrently` for a seamless development experience.
 - Generates a basic Express app boilerplate.
 
 ## Installation
@@ -33,19 +37,28 @@ Run the following command to create a new TypeScript Node.js project:
 npx create-tsx-node
 ```
 
-Follow the prompts to enter the project name. The tool will then:
+Follow the prompts to:
+
+1. Enter the project name (required).
+2. Specify the port for the server (default: `3000`).
+3. Choose the name of the source folder (default: `src`).
+4. Choose the name of the build folder (default: `build`).
+5. Decide whether to include live-reloading with `tsc --watch` and `nodemon` (default: included).
+
+After completing the prompts, the tool will:
 
 1. Create a new folder with the specified project name.
 2. Set up the directory structure:
-   - `src/`: Contains the source code (e.g., `index.ts`).
-   - `build/`: Contains the compiled JavaScript output.
+   - `<src-folder>/`: Contains the source code (e.g., `index.ts`).
+   - `<build-folder>/`: Contains the compiled JavaScript output.
 3. Generate necessary files such as `tsconfig.json` and `.gitignore`.
 4. Install required dependencies:
-   - Runtime: `express`, `nodemon`
-   - Development: `typescript`, `@types/node`, `@types/express`, `concurrently`
-5. Perform an initial TypeScript build.
+   - Runtime: `express`
+   - Development: `typescript`, `@types/node`, `@types/express`
+   - Optional: `nodemon`, `concurrently` (if live-reloading is enabled).
+5. Perform an initial TypeScript build (using `npx tsc`).
 
-After setup, navigate to the project folder and start the development server:
+Navigate to the project folder and start the development server:
 
 ```bash
 cd <project-name>
@@ -54,13 +67,13 @@ npm start
 
 ## Project Structure
 
-The created project will have the following structure:
+The created project will have the following structure (customizable folder names based on user input):
 
 ```
 <project-name>/
-├── src/
+├── <src-folder>/          # Source code folder (default: "src")
 │   └── index.ts           # Main entry point of the app
-├── build/                 # Compiled JavaScript files (auto-generated)
+├── <build-folder>/        # Compiled JavaScript files (default: "build")
 ├── tsconfig.json          # TypeScript configuration
 ├── package.json           # Project metadata and scripts
 ├── .gitignore             # Node.js-specific ignored files
@@ -75,10 +88,15 @@ The following scripts are included in the `package.json`:
   ```bash
   npm run build
   ```
-- **`start`**: Runs the development server using `tsc --watch` and `nodemon`.
-  ```bash
-  npm start
-  ```
+- **`start`**:
+  - If live-reloading is enabled: Runs the development server using `tsc --watch` and `nodemon`.
+    ```bash
+    npm start
+    ```
+  - If live-reloading is disabled: Starts the compiled server directly.
+    ```bash
+    npm start
+    ```
 
 ## Requirements
 
@@ -91,7 +109,7 @@ The following scripts are included in the `package.json`:
    ```bash
    npx create-tsx-node
    ```
-2. Enter the project name when prompted (e.g., `my-app`).
+2. Follow the prompts to customize the setup.
 3. Navigate to the project folder:
    ```bash
    cd my-app
@@ -101,16 +119,12 @@ The following scripts are included in the `package.json`:
    npm start
    ```
 
-Your application will be accessible at `http://localhost:3000`.
+Your application will be accessible at `http://localhost:<specified-port>`.
 
 ## Contributing
 
 Contributions are welcome! If you encounter bugs or have ideas for new features, feel free to open an issue or submit a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ---
 
-With `create-tsx-node`, setting up a TypeScript-based Node.js project has never been easier! 🚀
+With `create-tsx-node`, setting up a TypeScript-based Node.js project has never been easier or more customizable! 🚀
